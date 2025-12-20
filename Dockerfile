@@ -1,5 +1,10 @@
 FROM odoo:19.0
 
-ENTRYPOINT ["/entrypoint.sh"]
+USER root
 
-CMD ["odoo"]
+
+USER odoo
+
+# Force Odoo to run in a single process to save RAM
+ENTRYPOINT ["odoo"]
+CMD ["--workers=0", "--max-cron-threads=0"]
